@@ -68,6 +68,9 @@ public class RequestHandler implements Runnable {
 		byte[] dataCopy = new byte[count];
 		System.arraycopy(data, 0, dataCopy, 0, count);
 
+		/**
+		 * 这里使用synchronized关键字，可能会影响性能
+		 */
 		synchronized (pendingRequestSegment) {
 			// add data
 			pendingRequestSegment.add(new RequestSegmentHeader(client, dataCopy));
@@ -183,6 +186,9 @@ public class RequestHandler implements Runnable {
 	}
 }
 
+/**
+ * 数据请求的封装类
+ */
 class RequestSegmentHeader {
 	SocketChannel client;
 	byte[] data;
